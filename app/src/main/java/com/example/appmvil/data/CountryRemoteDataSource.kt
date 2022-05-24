@@ -7,31 +7,32 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CountryRemoteDataSource(apiClient: ApiClient) : CountryDataSource {
-    private var call: Call<CountryResponse>? = null
+    private var call: Call <List<Country>>? = null
     private val service = apiClient.build()
 
     override fun retrieveCountrys(callback: OperationCallback<Country>) {
 
-         val credential = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJlcml4LTAyQGhvdG1haWwuY29tIiwiYXBpX3Rva2VuIjoieEcyVzJFM0FMSFZTME9RMTRDQ3dIQ1ozcmtSQXlxci1VekMwWGVxSmVnMWstN2hGYjU5Wl9zWnZTYmU4TEI0bW9wNCJ9LCJleHAiOjE2NTMzNjExMDR9.tVR9fW5qE9DAVv_B1F_uz32MqsCiKBGyk-d2RZLYaSI"
+         val credential = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJlcml4LTAyQGhvdG1haWwuY29tIiwiYXBpX3Rva2VuIjoieEcyVzJFM0FMSFZTME9RMTRDQ3dIQ1ozcmtSQXlxci1VekMwWGVxSmVnMWstN2hGYjU5Wl9zWnZTYmU4TEI0bW9wNCJ9LCJleHAiOjE2NTM0NDc4NjR9.TgSCteCr_S482cvbag49WsSyXU8PrreSce3MrVCBvaY"
 
         call = service?.countrys(credential)
-        call?.enqueue(object : Callback<CountryResponse> {
-            override fun onFailure(call: Call<CountryResponse>, t: Throwable) {
+        call?.enqueue(object : Callback<List<Country>> {
+            override fun onFailure(call: Call <List<Country>>, t: Throwable) {
                 callback.onError(t.message)
             }
 
             override fun onResponse(
-                call: Call<CountryResponse>,
-                response: Response<CountryResponse>
+                call: Call<List<Country>>,
+                response: Response<List<Country>>
             ) {
                 response.body()?.let {
-                    if (response.isSuccessful && (it.isSuccess())) {
-                        callback.onSuccess(it.data)
+                    if (response.isSuccessful) {
+                        callback.onSuccess(it)
                     } else {
-                        callback.onError(it.data.toString())
+                        callback.onError(it.toString())
                     }
                 }
             }
+
         })
     }
 
@@ -41,3 +42,5 @@ class CountryRemoteDataSource(apiClient: ApiClient) : CountryDataSource {
         }
     }
 }
+
+

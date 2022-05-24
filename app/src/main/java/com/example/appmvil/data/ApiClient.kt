@@ -1,9 +1,11 @@
 package com.example.appmvil.data
 
-import okhttp3.Call
+
+import com.example.appmvil.model.Country
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -40,6 +42,6 @@ object ApiClient {
 
     interface ServicesApiInterface {
         @GET("/api/countries")
-        fun countrys(@Header("Authorization") credential:String): retrofit2.Call<CountryResponse>
+        fun countrys(@Header("Authorization") credential:String): Call <List<Country>>
     }
 }

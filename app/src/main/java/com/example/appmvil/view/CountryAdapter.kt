@@ -39,7 +39,7 @@ class CountryAdapter(private var countrys: List<Country>) :
         fun bind(country: Country) {
             textViewName.text = country.country_name.capitalize()
             textViewNameShort.text = country.country_short_name
-            Glide.with(imageView.context).load(R.drawable.ic_launcher_background).into(imageView)
+            Glide.with(imageView.context).load(R.drawable.ic_flag).into(imageView)
         }
     }
 }
